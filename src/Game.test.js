@@ -1,0 +1,2 @@
+test('renders game app', () => {
+});

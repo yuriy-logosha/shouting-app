@@ -1,21 +1,17 @@
 import React, {useReducer} from "react";
-import {w3cwebsocket as W3CWebSocket} from "websocket";
+
 import Board from "./Board";
 import Table from "./Table";
 
 const _width = 640;
 const _height = 480;
-const _client = new W3CWebSocket('ws://127.0.0.1:1300');
 const _initialState = {history: []};
 
 const reducer = (state, hit) => {return {history: [...state.history, hit]}}
 
-function Game() {
+function Game(props) {
+    const _client = props.client;
     const [_state, _appendHit] = useReducer(reducer, _initialState);
-
-    _client.onopen = () => {
-        console.log('Client Connected');
-    };
 
     _client.onmessage = (message) => {
         const dataFromServer = JSON.parse(message.data);
